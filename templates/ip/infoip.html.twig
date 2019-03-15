@@ -1,0 +1,12 @@
+{# templates/default/infoip.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    {% for item in ips %}
+        <li>{{ item.city }}||{{ item.country }}</li>
+    {% endfor %}
+{% endblock %}
