@@ -42,26 +42,18 @@ class CheckIps extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //$repository = $this->container->get('doctrine')->getManager();
-        $em = $this->container->get('doctrine')->getRepository(IpInfo::class);
-
-        $items = $em->findBy(
+        $items = $this->container->get('doctrine')->getRepository(IpInfo::class)->findBy(
             [],['id'=>'DESC'],10,0
         );
         foreach ($items as $item){
             $ip = $item->getIp();
-            $id = $item->getId();
             //Get info ip from api
             $ipApi = new IpApi($ip);
-            //Update rows
-            $row = $em->find($id);
-            $em = $this->container->get('doctrine')->getEntityManager();
-            //$ipInfo = new IpInfo($ipApi);
-            //$em->persist($ipInfo);
-            $em->flush();
+            //update ip
+            $item->update($ipApi);
+            $this->container->get('doctrine')->getEntityManager()->flush();
             $output->writeln($ip.' is updated');
         }
-
         $output->writeln('All ips is updated!');
     }
 }

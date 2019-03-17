@@ -79,4 +79,10 @@ class IpInfo
         $this->ip = $ip;
     }
 
+    public function update(IpApi $ipApi){
+        $info = $ipApi->getInfo();
+        $this->city = $info['city'];
+        $this->country = $info['country'];
+    }
+
 }
