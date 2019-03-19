@@ -19,32 +19,15 @@ class IpInfoRepository extends ServiceEntityRepository
         parent::__construct($registry, IpInfo::class);
     }
 
-    // /**
-    //  * @return IpInfo[] Returns an array of IpInfo objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findIpLastDay()
     {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder("e")
+            ->andWhere('e.dateCreated BETWEEN :from AND :to')
+            ->setParameter('from', new \DateTime('yesterday'))
+            ->setParameter('to', new \DateTime('now'))
+            ->orderBy('e.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?IpInfo
-    {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

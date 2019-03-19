@@ -7,7 +7,6 @@
 /vendor/
 .idea/
 .env
-.gitignore
 git
 symfony.lock
 composer.lock

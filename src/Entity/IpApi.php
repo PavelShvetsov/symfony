@@ -8,13 +8,12 @@
 
 namespace App\Entity;
 
-
 class IpApi
 {
     //protected $url = 'https://api.2ip.ua/geo.json';
-    protected $url = 'http://www.geoplugin.net/json.gp';
-    protected $ip;
-    protected $info = [];
+    private $url = 'http://www.geoplugin.net/json.gp';
+    private $ip;
+    private $info = [];
 
     function __construct($ip){
         $this->ip = $ip;

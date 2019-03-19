@@ -28,23 +28,19 @@ class CheckIps extends Command
     protected function configure()
     {
         $this
-            // имя команды (часть после "bin/console")
             ->setName('app:check-ips')
-
-            // краткое описание, отображающееся при запуске "php bin/console list"
             ->setDescription('Check ips in database')
-
-            // полное описание команды, отображающееся при запуске команды
-            // с опцией "--help"
             ->setHelp('This command check ips in database...')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $items = $this->container->get('doctrine')->getRepository(IpInfo::class)->findBy(
+        /*$items = $this->container->get('doctrine')->getRepository(IpInfo::class)->findBy(
             [],['id'=>'DESC'],10,0
-        );
+        );*/
+        $items = $this->container->get('doctrine')->getRepository(IpInfo::class)->findIpLastDay();
+
         foreach ($items as $item){
             $ip = $item->getIp();
             //Get info ip from api

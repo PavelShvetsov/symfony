@@ -13,8 +13,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+//use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class IpController extends Controller
@@ -30,7 +32,10 @@ class IpController extends Controller
     public function getInfoIp(Request $request)
     {
         $form = $this->createFormBuilder()
-            ->add('ip', TextType::class)
+            ->add('ip', TextType::class,[
+                'constraints' => [
+                    new Regex(['pattern' => "/^([0-9]{1,3}[\.]){3}[0-9]{1,3}$/"])
+                ]])
             ->add('save', SubmitType::class, array('label' => 'Save IP'))
             ->getForm();
 
@@ -44,8 +49,9 @@ class IpController extends Controller
                 ->getRepository(IpInfo::class)
                 ->findOneBy(['ip' => $data['ip']]);
 
-            if ($ip) {
+            if($ip){
                 return new Response('This ip exists '.$data['ip']);
+                //throw $this->createNotFoundException('This ip exists');
             }
 
             //Get info ip from api
@@ -55,7 +61,6 @@ class IpController extends Controller
             $ipInfo = new IpInfo($ipApi);
             $em->persist($ipInfo);
             $em->flush();
-            //return $this->redirectToRoute('ip_new');
         }
 
         return $this->render('ip/infoip.html.twig', array(

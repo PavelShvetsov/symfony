@@ -1,0 +1,1 @@
+@daily /usr/bin/php /var/www/symfony_test/bin/console app:check-ips

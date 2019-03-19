@@ -16,21 +16,22 @@ class IpInfo
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $city;
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $country;
-    //unique=true
     /**
-     * @ORM\Column(type="string", length=45)
+     * @ORM\Column(type="string", length=15 ,unique=true)
      */
     private $ip;
+    /**
+    * @ORM\Column(type="datetime", nullable=false)
+    */
+    private $dateCreated;
 
     function __construct(IpApi $ipApi)
     {
@@ -38,6 +39,7 @@ class IpInfo
         $this->city = $info['city'];
         $this->country = $info['country'];
         $this->ip = $info['ip'];
+        $this->dateCreated = new \Datetime("now");
     }
 
     public function getId(): ?int
@@ -77,6 +79,16 @@ class IpInfo
     public function setIp($ip)
     {
         $this->ip = $ip;
+    }
+
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = $dateCreated;
     }
 
     public function update(IpApi $ipApi){

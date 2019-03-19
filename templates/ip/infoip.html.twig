@@ -6,7 +6,18 @@
     {{ form_widget(form) }}
     {{ form_end(form) }}
 
+    <table>
+        <thead>
+            <th>Город</th>
+            <th>Страна</th>
+            <th>IP</th>
+        </thead>
     {% for item in ips %}
-        <li>{{ item.city }}||{{ item.country }}</li>
+        <tr>
+            <td>{{ item.city }}</td>
+            <td>{{ item.country }}</td>
+            <td>{{ item.ip }}</td>
+        </tr>
     {% endfor %}
+    </table>
 {% endblock %}
